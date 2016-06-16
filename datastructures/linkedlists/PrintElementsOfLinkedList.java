@@ -123,4 +123,36 @@ public class PrintElementsOfLinkedList {
             }
         }
     }
+    
+    /**
+     * return 1 if 2 linked lists are equal
+     * otherwise return 0
+     */
+    int CompareLists(Node headA, Node headB) {
+        int EQUAL = 1, NOT_EQUAL = 0;
+        
+        if(headA == null && headB == null) {
+            return EQUAL;
+        }
+        
+        Node currentNodeA = headA;
+        Node currentNodeB = headB;
+        while(currentNodeA != null) {
+            if(currentNodeB == null) {
+                return NOT_EQUAL;
+            }
+            
+            if(currentNodeA.data != currentNodeB.data) {
+                return NOT_EQUAL;
+            }
+            
+            currentNodeA = currentNodeA.next;
+            currentNodeB = currentNodeB.next;
+        }
+        
+        if(currentNodeB!=null) {
+            return NOT_EQUAL;
+        }
+        return EQUAL;
+    }
 }
