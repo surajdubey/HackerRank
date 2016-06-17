@@ -25,54 +25,85 @@ public class MergeSortedLinkedLists {
     */
 
     Node MergeLists(Node headA, Node headB) {
-        Node newHead = new Node();
+        Node newNodeToMerge = new Node();
+        Node newHead = null;
         Node currentNodeA = headA;
         Node currentNodeB = headB;
         
-        Node currentNewNode = new Node();
-        if(currentNodeA == null && currentNodeB == null) {
-            return null;
+        //set up head node of merged list
+        if(currentNodeA == null) {
+            if(currentNodeB == null) {
+                return null;
+            } else {
+                newHead = new Node();
+                newHead.data = currentNodeB.data;
+                currentNodeB = currentNodeB.next;
+                newNodeToMerge = newHead;
+            }
+        } else if(currentNodeB == null) {
+            newHead = new Node();
+            newHead.data = currentNodeA.data;
+            currentNodeA = currentNodeA.next;
+            newNodeToMerge = newHead;
         }
         
+
+        //set the head
         while(true) {
+
             if(currentNodeA == null) {
-                //copy all data of list B
                 while(currentNodeB != null) {
-                    Node newNode = new Node();
+                    Node newNode = new Node();                    
                     newNode.data = currentNodeB.data;
-                    currentNewNode = newNode;
                     currentNodeB = currentNodeB.next;
+                    if(newHead == null) {
+                        newHead = newNode;
+                        newNodeToMerge = newNode;
+                    } else {
+                        newNodeToMerge.next = newNode;                    
+                    }
+                    newNodeToMerge = newNodeToMerge.next;
                 }
                 break;
-            } else if(currentNodeB == null) {
-                //copy all data of list A
-                while(currentNodeA != null) {
-                    Node newNode = new Node();
-                    newNode.data = currentNodeA.data;
-                    currentNewNode = newNode;
-                    currentNodeA = currentNodeA.next;
-                }
-                break;
+            }
             
-            } else {
-                Node newNode = new Node();
-                   
-                if(currentNodeA.data > currentNodeB.data) {
-                    newNode.data = currentNodeB.data;
-                    currentNodeB = currentNodeB.next;
-                    
-                } else {
+            if(currentNodeB == null) {
+                while(currentNodeA != null) {
+                    Node newNode = new Node();                    
                     newNode.data = currentNodeA.data;
                     currentNodeA = currentNodeA.next;
+                    if(newHead == null) {
+                        newHead = newNode;
+                        newNodeToMerge = newNode;
+                    } else {
+                        newNodeToMerge.next = newNode;
+                    
+                    }
+                    newNodeToMerge = newNodeToMerge.next;
                 }
-
-            }
-        }
-
-        while(true) {
-            if(currentNodeA == null && currentNodeB == null) {
                 break;
             }
+            
+            Node newNode = new Node();
+            if(currentNodeA.data > currentNodeB.data) {
+                
+                newNode.data = currentNodeB.data;
+                currentNodeB = currentNodeB.next;
+                
+            } else {
+                newNode.data = currentNodeA.data;
+                currentNodeA = currentNodeA.next;
+            }
+            
+            if(newHead == null) {
+                newHead = newNode;
+                        newNodeToMerge = newNode;
+            }
+            else {
+                newNodeToMerge.next = newNode;
+            }
+            newNodeToMerge = newNodeToMerge.next;
+
         }
         
         return newHead;

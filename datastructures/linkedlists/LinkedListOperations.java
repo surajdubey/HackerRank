@@ -170,4 +170,82 @@ public class LinkedListOperations {
         
         return head;
     }
+    
+    /*
+    Reverse a linked list and return pointer to the head
+    The input list will have at least one element  
+    */
+    Node newHead;
+    Node Reverse(Node head) {
+        
+        if(head == null) {
+            return null;
+        }
+        
+        Reverse(head.next);
+        
+        if(newHead == null) {
+            newHead = new Node();
+            newHead.data = head.data;
+        } else {
+            Node newNode = new Node();
+            newNode.data = head.data;
+            
+            Node currentNode = newHead;
+            while(currentNode.next != null) {
+                currentNode = currentNode.next;
+            }
+            currentNode.next = newNode;
+        }
+ 
+        return newHead;
+    } 
+    
+    /*
+    Get Nth element from the end in a linked list of integers
+    Number of elements in the list will always be greater than N.
+    */
+    int GetNode(Node head, int n) {
+        Node pointer = head;        
+        int pointerPosition = 0;
+
+        while (head.next != null){
+            head = head.next;
+            if (pointerPosition < n){
+                pointerPosition++;
+            }else {
+                pointer = pointer.next;
+            }
+        }
+
+        return pointer.data;
+    }
+    /*
+    Detect a cycle in a linked list. Note that the head pointer may be 'null' if the list is empty.
+    */
+    
+    boolean hasCycle(Node head) {
+        
+        if(head == null) {
+            return false;
+        }
+
+        Node slowPointer = head;
+        Node fastPointer = head.next;
+
+        while(slowPointer != null && fastPointer != null) {
+            if(slowPointer == fastPointer) {
+                return true;
+            }
+
+            slowPointer = slowPointer.next;
+            fastPointer = fastPointer.next;
+            if(fastPointer != null) {
+                fastPointer = fastPointer.next;
+            }
+
+        } 
+        
+        return false;
+    }
 }
